@@ -1,0 +1,55 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+void meetInTheMiddle(int arr[], int n, int target) {
+    int half = n / 2;
+    int subsetSize = 1 << half;
+    int leftSubset[subsetSize];
+
+    for (int i = 0; i < subsetSize; i++) {
+        int sum = 0;
+        for (int j = 0; j < half; j++) {
+            if (i & (1 << j)) {
+                sum += arr[j];
+            }
+        }
+        leftSubset[i] = sum;
+    }
+
+    int rightSize = n - half;
+    int rightSubsetSize = 1 << rightSize;
+    int rightSubset[rightSubsetSize];
+
+    for (int i = 0; i < rightSubsetSize; i++) {
+        int sum = 0;
+        for (int j = 0; j < rightSize; j++) {
+            if (i & (1 << j)) {
+                sum += arr[half + j];
+            }
+        }
+        rightSubset[i] = sum;
+    }
+
+    // Find the closest sum to the target
+    int closestSum = INT_MAX;
+    for (int i = 0; i < subsetSize; i++) {
+        for (int j = 0; j < rightSubsetSize; j++) {
+            int currentSum = leftSubset[i] + rightSubset[j];
+            if (abs(target - currentSum) < abs(target - closestSum)) {
+                closestSum = currentSum;
+            }
+        }
+    }
+
+    printf("Closest sum to the target: %d\n", closestSum);
+}
+
+int main() {
+    int arr[] = {3, 8, 5, 12, 10};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int target = 20;
+
+    meetInTheMiddle(arr, n, target);
+
+    return 0;
+}
