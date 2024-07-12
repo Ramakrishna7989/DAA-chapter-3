@@ -1,0 +1,43 @@
+#include <stdio.h>
+
+#define SWAP(x, y) { int temp = x; x = y; y = temp; }
+
+int partition(int arr[], int left, int right, int pivotIndex);
+int findMedian(int arr[], int n);
+int medianOfMedians(int arr[], int left, int right, int k);
+
+int main() {
+    int arr[] = {3, 6, 8, 2, 9, 4, 5, 7, 1};
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int k = 5;
+
+    int kthSmallest = medianOfMedians(arr, 0, n - 1, k);
+
+    printf("The %d-th smallest element is: %d\n", k, kthSmallest);
+
+    return 0;
+}
+
+int partition(int arr[], int left, int right, int pivotIndex) {
+    int pivotValue = arr[pivotIndex];
+    SWAP(arr[pivotIndex], arr[right]);
+    int storeIndex = left;
+
+    for (int i = left; i < right; i++) {
+        if (arr[i] < pivotValue) {
+            SWAP(arr[i], arr[storeIndex]);
+            storeIndex++;
+        }
+    }
+    SWAP(arr[storeIndex], arr[right]);
+
+    return storeIndex;
+}
+
+int findMedian(int arr[], int n) {
+    // Implementation of finding median
+}
+
+int medianOfMedians(int arr[], int left, int right, int k) {
+    // Implementation of Median of Medians algorithm
+}
