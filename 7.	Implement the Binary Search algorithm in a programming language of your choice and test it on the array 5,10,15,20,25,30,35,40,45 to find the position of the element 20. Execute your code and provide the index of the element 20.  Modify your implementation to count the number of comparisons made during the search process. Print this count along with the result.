@@ -1,0 +1,39 @@
+#include <stdio.h>
+
+int binarySearch(int arr[], int left, int right, int target, int *count) {
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+
+        if (arr[mid] == target) {
+            (*count)++;
+            return mid;
+        }
+
+        if (arr[mid] < target) {
+            (*count)++;
+            left = mid + 1;
+        } else {
+            (*count)++;
+            right = mid - 1;
+        }
+    }
+
+    return -1;
+}
+
+int main() {
+    int arr[] = {5, 10, 15, 20, 25, 30, 35, 40, 45};
+    int target = 20;
+    int count = 0;
+    int n = sizeof(arr) / sizeof(arr[0]);
+    int result = binarySearch(arr, 0, n - 1, target, &count);
+
+    if (result != -1) {
+        printf("Element found at index: %d\n", result);
+        printf("Number of comparisons: %d\n", count);
+    } else {
+        printf("Element not found in the array.\n");
+    }
+
+    return 0;
+}
