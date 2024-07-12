@@ -1,0 +1,32 @@
+#include <stdio.h>
+
+int karatsuba(int x, int y) {
+    if (x < 10 || y < 10) {
+        return x * y;
+    }
+
+    int n = (x < y) ? y : x;
+    int m = n / 2;
+
+    int a = x / 10;
+    int b = x % 10;
+    int c = y / 10;
+    int d = y % 10;
+
+    int ac = karatsuba(a, c);
+    int bd = karatsuba(b, d);
+    int ad_bc = karatsuba(a + b, c + d) - ac - bd;
+
+    return ac * 100 + (ad_bc * 10) + bd;
+}
+
+int main() {
+    int x = 1234;
+    int y = 5678;
+
+    int z = karatsuba(x, y);
+
+    printf("Result: %d x %d = %d\n", x, y, z);
+
+    return 0;
+}
